@@ -82,10 +82,11 @@ class GUI:
 
 
     def _clear_function_queue(self):
-        while len(self._function_queue) > 0:
-            _id, func = self._function_queue.popitem()
+        for _id in self._function_queue:
+            func = self._function_queue[_id]
             result = func()
             self._result_queue[_id] = result
+        self._function_queue.clear()
 
 
     def call_in_thread(self, func: Callable, block=False):
