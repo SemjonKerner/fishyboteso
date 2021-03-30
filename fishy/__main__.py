@@ -90,7 +90,7 @@ def main():
 
     gui_window.start()
 
-    bot.start_event_handler()
+    bot.start_event_handler(gui_window)
     config.stop()
 
 

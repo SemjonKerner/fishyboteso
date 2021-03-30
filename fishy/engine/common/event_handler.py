@@ -1,5 +1,6 @@
 import logging
 import time
+import threading
 
 from fishy.engine import SemiFisherEngine
 from fishy.engine.fullautofisher.engine import FullAuto
@@ -13,8 +14,8 @@ class EngineEventHandler:
         self.semi_fisher_engine = SemiFisherEngine(gui_ref)
         self.full_fisher_engine = FullAuto(gui_ref)
 
-    def start_event_handler(self):
-        while self.event_handler_running:
+    def start_event_handler(self, gui):
+        while self.event_handler_running and gui._thread in threading.enumerate():
             while len(self.event) > 0:
                 event = self.event.pop(0)
                 event()
