@@ -49,9 +49,11 @@ class GUI:
         new_console = GUIStreamHandler(self)
         root_logger.addHandler(new_console)
 
+
     @property
     def engine(self):
         return self.get_engine()
+
 
     @property
     def engines(self):
@@ -65,17 +67,26 @@ class GUI:
                                            self.engine.toggle_fullfisher]
         return engines
 
+
     def create(self):
         main_gui._create(self)
 
+
     def start(self):
         self._thread.start()
+
+
+    def stop(self):
+        self._destroyed = True
+        self._thread.join()
+
 
     def _clear_function_queue(self):
         while len(self._function_queue) > 0:
             _id, func = self._function_queue.popitem()
             result = func()
             self._result_queue[_id] = result
+
 
     def call_in_thread(self, func: Callable, block=False):
         _id = str(uuid.uuid4())
@@ -87,6 +98,7 @@ class GUI:
         wait_until(lambda: _id in self._result_queue)
 
         return self._result_queue.pop(_id)
+
 
     def _get_start_stop_text(self):
         return "STOP (F9)" if self._bot_running else "START (F9)"

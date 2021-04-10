@@ -136,7 +136,7 @@ def _create(gui: 'GUI'):
                 return
 
         config.set("win_loc", gui._root.geometry())
-        gui._destroyed = True
+        gui.stop()
 
     gui._root.protocol("WM_DELETE_WINDOW", set_destroy)
     gui._destroyed = False

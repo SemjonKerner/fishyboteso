@@ -5,6 +5,7 @@ import sys
 import traceback
 import win32con
 import win32gui
+import signal
 
 import fishy
 from fishy import web, helper, gui
@@ -13,6 +14,11 @@ from fishy.gui import GUI, splash, update_dialog
 from fishy.helper import hotkey
 from fishy.helper.config import config
 from fishy.constants import chalutier, lam2
+
+
+def keyboardInterruptHandler(signal, frame):
+    config.stop()
+    exit(0)
 
 
 def check_window_name(title):
@@ -70,6 +76,7 @@ def initialize(window_to_hide):
 def main():
     config.init()
     splash.start()
+    signal.signal(signal.SIGINT, keyboardInterruptHandler)
     print("launching please wait...")
 
     pil_logger = logging.getLogger('PIL')

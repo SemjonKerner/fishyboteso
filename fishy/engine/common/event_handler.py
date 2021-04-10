@@ -41,5 +41,6 @@ class EngineEventHandler:
         def func():
             self.semi_fisher_engine.start = False
             self.event_handler_running = False
+            gui._destroyed = True
 
         self.event.put(func)
