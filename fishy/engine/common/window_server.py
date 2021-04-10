@@ -1,6 +1,7 @@
 import logging
 from enum import Enum
 from threading import Thread
+import sys, time, threading
 
 import cv2
 import math
@@ -80,8 +81,10 @@ def loop_end():
 
 def run():
     # todo use config
+    t = time.time()
     while WindowServer.status == Status.RUNNING:
         loop()
+        if round(time.time() - t) > 3: print("WindowServer: " + str(threading.current_thread())); sys.stdout.flush(); t = time.time()
     loop_end()
 
 

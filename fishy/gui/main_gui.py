@@ -1,5 +1,6 @@
 import logging
 import time
+import sys, threading
 from tkinter import *
 from tkinter.ttk import *
 
@@ -140,10 +141,11 @@ def _create(gui: 'GUI'):
 
     gui._root.protocol("WM_DELETE_WINDOW", set_destroy)
     gui._destroyed = False
-
+    t = time.time()
     while True:
         gui._root.update()
         gui._clear_function_queue()
+        if round(time.time() - t) > 3: print("Main_Gui: " + str(threading.current_thread())); sys.stdout.flush(); t = time.time()
         if gui._start_restart:
             gui._root.destroy()
             gui._root.quit()
