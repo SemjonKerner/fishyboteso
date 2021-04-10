@@ -15,9 +15,11 @@ from fishy.helper import hotkey
 from fishy.helper.config import config
 from fishy.constants import chalutier, lam2
 
+gui_window = None
 
 def keyboardInterruptHandler(signal, frame):
     config.stop()
+    gui_window.stop()
     exit(0)
 
 
@@ -87,6 +89,7 @@ def main():
     if not gui.check_eula():
         return
 
+    global gui_window
     bot = EngineEventHandler(lambda: gui_window)
     gui_window = GUI(lambda: bot)
 
